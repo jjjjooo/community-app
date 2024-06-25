@@ -1,7 +1,7 @@
 package com.app.community.config.web;
 
-import com.app.community.support.AuthenticationMember;
-import com.app.community.domain.member.LoginMember;
+import com.app.community.domain.member.AuthMember;
+import com.app.community.support.annotataion.AuthenticationMember;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -11,7 +11,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-
 @Component
 @RequiredArgsConstructor
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
@@ -20,7 +19,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasAnnotation = parameter.hasParameterAnnotation(AuthenticationMember.class);
-        boolean hasModel = LoginMember.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasModel = AuthMember.class.isAssignableFrom(parameter.getParameterType());
         return hasAnnotation && hasModel;
     }
 
