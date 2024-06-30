@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
-public class ChatMessage {
+public class Message {
 
     private @Nullable Long id;
     private @NotNull Long chatId;
@@ -16,7 +16,7 @@ public class ChatMessage {
     private @NotNull MessageType messageType;
 
     @Builder
-    private ChatMessage(
+    private Message(
             @Nullable Long id,
             @NotNull Long chatId,
             @NotNull Long senderId,
@@ -32,17 +32,17 @@ public class ChatMessage {
         this.messageType = messageType;
     }
 
-    public static ChatMessage first(Long requesterId, Chat chat) {
-        return ChatMessage.builder()
+    public static Message first(Long requesterId, Chat chat) {
+        return Message.builder()
                 .senderId(requesterId)
                 .messageType(MessageType.MESSAGE)
                 .isRead(false)
                 .build();
     }
 
-    public static ChatMessage send(Long senderId, String content, Chat chat) {
-        return ChatMessage.builder()
-                .chatId(chat.getId())
+    public static Message send(Long senderId, String content, Long chatId) {
+        return Message.builder()
+                .chatId(chatId)
                 .senderId(senderId)
                 .messageType(MessageType.MESSAGE)
                 .content(content)

@@ -6,18 +6,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public class Chat {
 
-    private Long id;
-    private Long respondentId;
-    private Long requesterId;
-    private Boolean isEnd;
-    private LocalDateTime endDate;
-    private List<ChatMessage> chatMessageList = new ArrayList<>();
+    private @Nullable Long id;
+    private @NotNull Long respondentId;
+    private @NotNull Long requesterId;
+    private @NotNull Boolean isEnd;
+    private @NotNull LocalDateTime endDate;
 
     @Builder
     private Chat(
@@ -34,23 +31,15 @@ public class Chat {
         this.endDate = endDate;
     }
 
-    public static Chat create(Long respondentId, Long requesterId) {
+    public static Chat create(
+            @NotNull Long respondentId,
+            @NotNull Long requesterId
+    ) {
         return Chat.builder()
                 .requesterId(requesterId)
                 .respondentId(respondentId)
                 .isEnd(false)
                 .endDate(LocalDateTime.now().plusWeeks(1))
                 .build();
-    }
-
-    public void addMessage(Long requesterId) {
-        ChatMessage firstMessage = ChatMessage.first(requesterId, this);
-        this.chatMessageList.add(firstMessage);
-    }
-
-    public void sendMessage(String message, Long senderId) {
-        if(!this.respondentId.equals(senderId) && !this.requesterId.equals(senderId))
-            throw new IllegalArgumentException("비정상적인 접근입니다.");
-        this.chatMessageList.add(ChatMessage.send(senderId, message, this));
     }
 }
