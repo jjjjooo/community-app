@@ -1,5 +1,8 @@
 package com.app.community.domain.member;
 
-public class LoginMember {
+import lombok.Getter;
+
+@Getter
+public class AuthMember {
     private Long memberId;
 }
