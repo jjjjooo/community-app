@@ -1,5 +1,8 @@
 package com.app.community.domain.member;
 
+import com.app.community.domain.chat.Chat;
+import com.app.community.support.error.CoreApiException;
+import com.app.community.support.error.ErrorType;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -25,5 +28,9 @@ public class MemberReader {
 
     public Optional<Member> findBySocial(@NotNull String socialId, @NotNull String socialProvider){
         return memberRepository.findBySocial(socialId, socialProvider);
+    }
+
+    public Member getRespondent(Chat chat) {
+        return getById(chat.getRespondentId());
     }
 }
